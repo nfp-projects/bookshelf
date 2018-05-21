@@ -433,7 +433,11 @@ const BookshelfCollection = CollectionBase.extend({
    * Handle the related data loading on the collection.
    */
   _handleEager: function(response, options) {
-    return new EagerRelation(this.models, response, new this.model())
+    const newModel = new this.model()
+    if (options.req) {
+      newModel._req = options.req
+    }
+    return new EagerRelation(this.models, response, newModel)
       .fetch(options);
   }
 
